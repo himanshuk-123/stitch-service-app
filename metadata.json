@@ -1,0 +1,6 @@
+{
+  "name": "Fixora - On-Demand Services Platform",
+  "description": "White-label on-demand home services booking application with full brand customization, service catalogs, professional selection, scheduling, and booking management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
