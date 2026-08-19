@@ -58,8 +58,9 @@ export const ServiceDetailScreen: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-full bg-white pb-24">
-      {/* Top Media Gallery with Floating Nav */}
+    <div className="flex flex-col h-full overflow-hidden bg-white">
+      <div className="flex-1 overflow-y-auto">
+        {/* Top Media Gallery with Floating Nav */}
       <div className="relative h-72 w-full bg-slate-900">
         <img
           src={images[activeImageIndex]}
@@ -325,11 +326,12 @@ export const ServiceDetailScreen: React.FC = () => {
                 '"The team arrived on time and did a phenomenal job. My kitchen hasn\'t looked this clean since we moved in. Highly recommend the deep cleaning service!"'}
             </p>
           </div>
+          </div>
         </div>
       </div>
 
-      {/* Sticky Bottom Bar */}
-      <div className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-100 px-4 py-3 z-30 shadow-lg max-w-md mx-auto">
+      {/* Fixed Bottom Action Bar */}
+      <div className="shrink-0 bg-white/95 backdrop-blur-md border-t border-slate-100 px-4 py-3 z-30 shadow-lg">
         <div className="flex items-center justify-between gap-4">
           <div>
             <div className="text-xl font-extrabold text-slate-900">

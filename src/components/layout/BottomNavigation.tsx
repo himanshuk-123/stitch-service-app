@@ -13,7 +13,7 @@ export const BottomNavigation: React.FC = () => {
   ];
 
   return (
-    <nav className="sticky bottom-0 z-30 w-full bg-white/95 backdrop-blur-md border-t border-slate-100 px-3 py-2 shadow-sm">
+    <nav className="shrink-0 z-30 w-full bg-white/95 backdrop-blur-md border-t border-slate-100 px-3 py-2 shadow-lg">
       <div className="flex items-center justify-around max-w-md mx-auto">
         {navItems.map((item) => {
           const isActive = activeTab === item.id;

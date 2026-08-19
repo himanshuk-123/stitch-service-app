@@ -106,15 +106,15 @@ const MainApp: React.FC = () => {
       <main
         className={`w-full transition-all duration-300 bg-white shadow-2xl flex flex-col relative overflow-hidden ${
           deviceFrame === 'mobile'
-            ? 'max-w-md rounded-none sm:rounded-[36px] sm:border-[8px] sm:border-slate-800/80 min-h-screen sm:min-h-[844px] sm:max-h-[92vh]'
-            : 'max-w-2xl rounded-2xl min-h-screen sm:min-h-[850px]'
+            ? 'max-w-md rounded-none sm:rounded-[36px] sm:border-[8px] sm:border-slate-800/80 h-screen sm:h-[844px] sm:max-h-[92vh]'
+            : 'max-w-2xl rounded-2xl h-screen sm:h-[850px] sm:max-h-[92vh]'
         }`}
         style={{
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.45)',
         }}
       >
         {/* Dynamic Screen Viewport */}
-        <div className="flex-1 overflow-y-auto relative flex flex-col">
+        <div className="flex-1 relative flex flex-col overflow-hidden h-full">
           <ScreenRenderer />
         </div>
 

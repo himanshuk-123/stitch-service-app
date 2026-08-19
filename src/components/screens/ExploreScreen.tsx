@@ -23,39 +23,41 @@ export const ExploreScreen: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col min-h-full bg-slate-50/60">
-      <AppHeader
-        title={`${currentCategory.name} Services`}
-        showBack={true}
-        showSearch={true}
-        onSearchClick={() => setIsSearchOpen(true)}
-      />
+    <div className="flex flex-col h-full overflow-hidden bg-slate-50/60">
+      <div className="shrink-0">
+        <AppHeader
+          title={`${currentCategory.name} Services`}
+          showBack={true}
+          showSearch={true}
+          onSearchClick={() => setIsSearchOpen(true)}
+        />
 
-      {/* Category Horizontal Switcher */}
-      <div className="bg-white border-b border-slate-100 px-4 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar">
-        {categories.map((cat) => {
-          const isSelected = cat.id === currentCategory.id;
-          return (
-            <button
-              key={cat.id}
-              id={`cat-chip-${cat.id}`}
-              onClick={() => setSelectedCategoryId(cat.id)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                isSelected
-                  ? 'text-white shadow-xs'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              }`}
-              style={{
-                backgroundColor: isSelected ? brandConfig.primaryColor : undefined,
-              }}
-            >
-              {cat.name}
-            </button>
-          );
-        })}
+        {/* Category Horizontal Switcher */}
+        <div className="bg-white border-b border-slate-100 px-4 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar">
+          {categories.map((cat) => {
+            const isSelected = cat.id === currentCategory.id;
+            return (
+              <button
+                key={cat.id}
+                id={`cat-chip-${cat.id}`}
+                onClick={() => setSelectedCategoryId(cat.id)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                  isSelected
+                    ? 'text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+                style={{
+                  backgroundColor: isSelected ? brandConfig.primaryColor : undefined,
+                }}
+              >
+                {cat.name}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      <div className="flex-1 px-4 py-4 space-y-6 pb-6">
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6 pb-6">
         {/* Hero Card */}
         <div className="relative h-56 rounded-3xl overflow-hidden shadow-sm">
           <img

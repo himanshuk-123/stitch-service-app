@@ -99,10 +99,12 @@ export const SelectDateTimeScreen: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-full bg-slate-50/70 pb-24">
-      <AppHeader title="Select date & time" showBack={true} />
+    <div className="flex flex-col h-full overflow-hidden bg-slate-50/70">
+      <div className="shrink-0">
+        <AppHeader title="Select date & time" showBack={true} />
+      </div>
 
-      <div className="p-4 space-y-5">
+      <div className="flex-1 overflow-y-auto p-4 space-y-5 pb-6">
         {/* Top Summary Card */}
         <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-xs space-y-2">
           <h3 className="text-base font-bold text-slate-900">
@@ -292,13 +294,12 @@ export const SelectDateTimeScreen: React.FC = () => {
             id="btn-request-custom-time"
             className="w-full py-2.5 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-xs hover:bg-slate-50 active:scale-95 transition-all"
           >
-            Request another time
           </button>
         </div>
       </div>
 
-      {/* Sticky Bottom Price Bar */}
-      <div className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-100 px-4 py-3 z-30 shadow-lg max-w-md mx-auto">
+      {/* Fixed Bottom Price Bar */}
+      <div className="shrink-0 bg-white/95 backdrop-blur-md border-t border-slate-100 px-4 py-3 z-30 shadow-lg">
         <div className="flex items-center justify-between gap-4">
           <div>
             <div className="text-lg font-black text-slate-900">

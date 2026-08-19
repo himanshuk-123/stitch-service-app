@@ -56,18 +56,20 @@ export const ChooseProfessionalScreen: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-full bg-slate-50/70 pb-24">
-      <AppHeader
-        title="Choose a professional"
-        showBack={true}
-        showFilter={true}
-        onFilterClick={() => {
-          const next = activeFilter === 'recommended' ? 'top_rated' : activeFilter === 'top_rated' ? 'lowest_price' : 'recommended';
-          setActiveFilter(next);
-        }}
-      />
+    <div className="flex flex-col h-full overflow-hidden bg-slate-50/70">
+      <div className="shrink-0">
+        <AppHeader
+          title="Choose a professional"
+          showBack={true}
+          showFilter={true}
+          onFilterClick={() => {
+            const next = activeFilter === 'recommended' ? 'top_rated' : activeFilter === 'top_rated' ? 'lowest_price' : 'recommended';
+            setActiveFilter(next);
+          }}
+        />
+      </div>
 
-      <div className="p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-6">
         {/* Selected Service Card */}
         <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-xs flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -275,8 +277,8 @@ export const ChooseProfessionalScreen: React.FC = () => {
         </div>
       </div>
 
-      {/* Sticky Bottom Action */}
-      <div className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-100 p-4 z-30 shadow-lg max-w-md mx-auto">
+      {/* Fixed Bottom Action */}
+      <div className="shrink-0 bg-white/95 backdrop-blur-md border-t border-slate-100 p-4 z-30 shadow-lg">
         <button
           onClick={handleContinue}
           id="btn-confirm-pro-selection"

@@ -34,14 +34,16 @@ export const ProfileScreen: React.FC = () => {
   } = useApp();
 
   return (
-    <div className="flex flex-col min-h-full bg-slate-50/70 pb-6">
-      <AppHeader
-        title="Profile"
-        showBack={false}
-        showFilter={false}
-      />
+    <div className="flex flex-col h-full overflow-hidden bg-slate-50/70">
+      <div className="shrink-0">
+        <AppHeader
+          title="Profile"
+          showBack={false}
+          showFilter={false}
+        />
+      </div>
 
-      <div className="flex-1 p-4 space-y-5 pb-6">
+      <div className="flex-1 overflow-y-auto p-4 space-y-5 pb-6">
         {/* User Card / Guest Card */}
         {isLoggedIn ? (
           <div className="bg-white rounded-3xl p-4 border border-slate-100 shadow-xs flex items-center justify-between">

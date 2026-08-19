@@ -58,10 +58,12 @@ export const BookingSummaryScreen: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-full bg-slate-50/70 pb-24">
-      <AppHeader title="Booking Summary" showBack={true} />
+    <div className="flex flex-col h-full overflow-hidden bg-slate-50/70">
+      <div className="shrink-0">
+        <AppHeader title="Booking Summary" showBack={true} />
+      </div>
 
-      <div className="p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-6">
         {/* Top Header Card */}
         <div className="bg-white rounded-2xl p-4 border border-slate-100 shadow-xs flex items-center gap-3.5">
           <div className="h-16 w-16 rounded-2xl overflow-hidden bg-slate-100 shrink-0">
@@ -242,8 +244,8 @@ export const BookingSummaryScreen: React.FC = () => {
         </div>
       </div>
 
-      {/* Sticky Bottom Bar */}
-      <div className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-100 px-4 py-3 z-30 shadow-lg max-w-md mx-auto">
+      {/* Fixed Bottom Bar */}
+      <div className="shrink-0 bg-white/95 backdrop-blur-md border-t border-slate-100 px-4 py-3 z-30 shadow-lg">
         <div className="flex items-center justify-between gap-4">
           <div>
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">

@@ -67,9 +67,9 @@ export const HomeScreen: React.FC = () => {
   const popularServices = services.filter((s) => s.isPopular);
 
   return (
-    <div className="flex flex-col min-h-full bg-slate-50/70">
+    <div className="flex flex-col h-full overflow-hidden bg-slate-50/70">
       {/* Top Header Bar with Brand Logo, Location & Palette/Notification Controls */}
-      <div className="bg-white px-4 pt-3 pb-2.5 border-b border-slate-100 flex items-center justify-between sticky top-0 z-20 shadow-2xs">
+      <div className="shrink-0 bg-white px-4 pt-3 pb-2.5 border-b border-slate-100 flex items-center justify-between z-20 shadow-2xs">
         {/* Brand Logo & Location */}
         <div className="flex items-center gap-2.5">
           {/* Brand Logo Badge */}
@@ -130,7 +130,7 @@ export const HomeScreen: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex-1 px-4 py-4 space-y-6 pb-6">
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6 pb-6">
         {/* User Greeting */}
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
