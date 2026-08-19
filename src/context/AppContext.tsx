@@ -10,6 +10,7 @@ import {
   ScreenType,
   BookingFlowState,
   Address,
+  AppNotification,
 } from '../types';
 import {
   defaultBrandConfig,
@@ -19,6 +20,7 @@ import {
   defaultReviews,
   defaultUser,
   defaultInitialBookings,
+  defaultNotifications,
 } from '../data/initialData';
 
 interface AppContextType {
@@ -62,6 +64,10 @@ interface AppContextType {
   user: UserProfile;
   updateUser: (updatedUser: Partial<UserProfile>) => void;
   addAddress: (address: Omit<Address, 'id'>) => void;
+  isLoggedIn: boolean;
+  login: (email: string, name?: string) => void;
+  signup: (name: string, email: string, phone: string, city?: string) => void;
+  logout: () => void;
 
   bookings: Booking[];
   bookingFlow: BookingFlowState;
@@ -79,6 +85,8 @@ interface AppContextType {
   setIsSearchOpen: (open: boolean) => void;
   isNotificationOpen: boolean;
   setIsNotificationOpen: (open: boolean) => void;
+  notifications: AppNotification[];
+  markNotificationAsRead: (id: string) => void;
   selectedBookingForDetail: Booking | null;
   setSelectedBookingForDetail: (booking: Booking | null) => void;
   viewMode: 'mobile_frame' | 'responsive';
@@ -136,9 +144,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return saved ? JSON.parse(saved) : defaultUser;
   });
 
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    const saved = localStorage.getItem('fixora_is_logged_in');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+
   const [bookings, setBookings] = useState<Booking[]>(() => {
     const saved = localStorage.getItem('fixora_bookings');
     return saved ? JSON.parse(saved) : defaultInitialBookings;
+  });
+
+  const [notifications, setNotifications] = useState<AppNotification[]>(() => {
+    const saved = localStorage.getItem('fixora_notifications');
+    return saved ? JSON.parse(saved) : defaultNotifications;
   });
 
   // Booking Flow State
@@ -184,8 +202,53 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [user]);
 
   useEffect(() => {
+    localStorage.setItem('fixora_is_logged_in', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+
+  useEffect(() => {
     localStorage.setItem('fixora_bookings', JSON.stringify(bookings));
   }, [bookings]);
+
+  useEffect(() => {
+    localStorage.setItem('fixora_notifications', JSON.stringify(notifications));
+  }, [notifications]);
+
+  const login = (email: string, name?: string) => {
+    setIsLoggedIn(true);
+    if (email) {
+      setUser((prev) => ({
+        ...prev,
+        email,
+        name: name || (email.split('@')[0] ? email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1) : prev.name),
+        avatarText: (name || email).slice(0, 2).toUpperCase(),
+      }));
+    }
+    showToast('Logged in successfully!');
+  };
+
+  const signup = (name: string, email: string, phone: string, city?: string) => {
+    setIsLoggedIn(true);
+    setUser((prev) => ({
+      ...prev,
+      name,
+      email,
+      phone,
+      city: city || prev.city,
+      avatarText: name.slice(0, 2).toUpperCase(),
+    }));
+    showToast('Account created successfully!');
+  };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+    showToast('Logged out of your account');
+  };
+
+  const markNotificationAsRead = (id: string) => {
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, isRead: true } : n))
+    );
+  };
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -409,6 +472,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         user,
         updateUser,
         addAddress,
+        isLoggedIn,
+        login,
+        signup,
+        logout,
         bookings,
         bookingFlow,
         setBookingFlow,
@@ -423,6 +490,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setIsSearchOpen,
         isNotificationOpen,
         setIsNotificationOpen,
+        notifications,
+        markNotificationAsRead,
         selectedBookingForDetail,
         setSelectedBookingForDetail,
         viewMode,

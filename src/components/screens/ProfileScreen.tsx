@@ -11,6 +11,7 @@ import {
   Star,
   ChevronRight,
   LogOut,
+  LogIn,
   Edit3,
   Sparkles,
 } from 'lucide-react';
@@ -21,6 +22,8 @@ import { BottomNavigation } from '../layout/BottomNavigation';
 export const ProfileScreen: React.FC = () => {
   const {
     user,
+    isLoggedIn,
+    logout,
     brandConfig,
     setIsCustomizerOpen,
     setIsLocationModalOpen,
@@ -39,34 +42,62 @@ export const ProfileScreen: React.FC = () => {
       />
 
       <div className="flex-1 p-4 space-y-5 pb-6">
-        {/* User Card */}
-        <div className="bg-white rounded-3xl p-4 border border-slate-100 shadow-xs flex items-center justify-between">
-          <div className="flex items-center gap-3.5">
-            <div
-              className="flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-100 text-blue-700 text-lg font-black"
-              style={{
-                backgroundColor: `${brandConfig.primaryColor}20`,
-                color: brandConfig.primaryColor,
-              }}
-            >
-              {user.avatarText || user.name.slice(0, 2).toUpperCase()}
+        {/* User Card / Guest Card */}
+        {isLoggedIn ? (
+          <div className="bg-white rounded-3xl p-4 border border-slate-100 shadow-xs flex items-center justify-between">
+            <div className="flex items-center gap-3.5">
+              <div
+                className="flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-100 text-blue-700 text-lg font-black"
+                style={{
+                  backgroundColor: `${brandConfig.primaryColor}20`,
+                  color: brandConfig.primaryColor,
+                }}
+              >
+                {user.avatarText || user.name.slice(0, 2).toUpperCase()}
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-900">{user.name}</h3>
+                <p className="text-xs text-slate-500">{user.phone}</p>
+                <p className="text-xs text-slate-400">{user.email}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base font-bold text-slate-900">{user.name}</h3>
-              <p className="text-xs text-slate-500">{user.phone}</p>
-              <p className="text-xs text-slate-400">{user.email}</p>
+
+            <button
+              onClick={() => setIsEditProfileOpen(true)}
+              id="btn-edit-profile-trigger"
+              className="flex items-center justify-center w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 active:scale-95 transition-all"
+              aria-label="Edit Profile"
+            >
+              <Edit3 className="h-4 w-4" />
+            </button>
+          </div>
+        ) : (
+          <div className="bg-slate-900 text-white rounded-3xl p-5 shadow-lg flex flex-col gap-3">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-white/10 text-white font-bold text-lg">
+                ?
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-white">Guest User</h3>
+                <p className="text-xs text-white/60">Log in to view bookings & manage profile</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 pt-1">
+              <button
+                onClick={() => navigate('login')}
+                className="flex-1 py-2.5 rounded-xl bg-white text-slate-900 font-extrabold text-xs hover:bg-slate-100 transition-all text-center"
+              >
+                Log In
+              </button>
+              <button
+                onClick={() => navigate('signup')}
+                className="flex-1 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white font-bold text-xs transition-all text-center"
+              >
+                Sign Up
+              </button>
             </div>
           </div>
-
-          <button
-            onClick={() => setIsEditProfileOpen(true)}
-            id="btn-edit-profile-trigger"
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 active:scale-95 transition-all"
-            aria-label="Edit Profile"
-          >
-            <Edit3 className="h-4 w-4" />
-          </button>
-        </div>
+        )}
 
         {/* White-Label Rebranding Banner */}
         <div
@@ -232,15 +263,30 @@ export const ProfileScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Log out button */}
-        <button
-          onClick={() => showToast('Session active')}
-          id="btn-logout"
-          className="w-full py-3 px-4 rounded-2xl bg-white border border-red-200 text-red-600 font-bold text-xs hover:bg-red-50 flex items-center justify-center gap-2 active:scale-95 transition-all shadow-xs"
-        >
-          <LogOut className="h-4 w-4" />
-          <span>Log out</span>
-        </button>
+        {/* Log out / Log in action button */}
+        {isLoggedIn ? (
+          <button
+            onClick={() => {
+              logout();
+              navigate('login');
+            }}
+            id="btn-logout"
+            className="w-full py-3 px-4 rounded-2xl bg-white border border-red-200 text-red-600 font-bold text-xs hover:bg-red-50 flex items-center justify-center gap-2 active:scale-95 transition-all shadow-xs"
+          >
+            <LogOut className="h-4 w-4" />
+            <span>Log out</span>
+          </button>
+        ) : (
+          <button
+            onClick={() => navigate('login')}
+            id="btn-login"
+            className="w-full py-3 px-4 rounded-2xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 flex items-center justify-center gap-2 active:scale-95 transition-all shadow-xs"
+            style={{ backgroundColor: brandConfig.primaryColor }}
+          >
+            <LogIn className="h-4 w-4" />
+            <span>Log in to your account</span>
+          </button>
+        )}
 
         {/* Footer info */}
         <div className="text-center pt-2 pb-4">

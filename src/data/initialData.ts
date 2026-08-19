@@ -1,4 +1,4 @@
-import { BrandConfig, ServiceCategory, ServiceItem, Professional, CustomerReview, UserProfile, Booking, SavedAddress } from '../types';
+import { BrandConfig, ServiceCategory, ServiceItem, Professional, CustomerReview, UserProfile, Booking, SavedAddress, AppNotification } from '../types';
 
 export const defaultBrandConfig: BrandConfig = {
   name: 'Fixora',
@@ -481,5 +481,32 @@ export const defaultInitialBookings: Booking[] = [
     paymentMethod: 'Standard pricing',
     status: 'confirmed',
     createdAt: '2026-08-15T11:20:00Z',
+  },
+];
+
+export const defaultNotifications: AppNotification[] = [
+  {
+    id: 'notif-1',
+    type: 'booking',
+    title: 'Booking Confirmed!',
+    message: 'Your AC Service booking with Priya Mehta is scheduled for Wed, 19 Aug at 2:00 PM.',
+    timeAgo: '10 min ago',
+    isRead: false,
+  },
+  {
+    id: 'notif-2',
+    type: 'promo',
+    title: 'Special 20% OFF Offer',
+    message: 'Use code FIXORA20 on your next Home Deep Cleaning booking to get instant discount.',
+    timeAgo: '2 hours ago',
+    isRead: false,
+  },
+  {
+    id: 'notif-3',
+    type: 'system',
+    title: 'Welcome to Fixora!',
+    message: 'Explore top-rated verified professionals for all your household service needs.',
+    timeAgo: '1 day ago',
+    isRead: true,
   },
 ];

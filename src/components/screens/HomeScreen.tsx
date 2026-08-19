@@ -3,6 +3,7 @@ import {
   MapPin,
   ChevronDown,
   Bell,
+  Palette,
   Search,
   SlidersHorizontal,
   Sparkles,
@@ -29,6 +30,7 @@ export const HomeScreen: React.FC = () => {
     currentCity,
     setIsLocationModalOpen,
     setIsNotificationOpen,
+    setIsCustomizerOpen,
     setIsSearchOpen,
     categories,
     services,
@@ -66,42 +68,66 @@ export const HomeScreen: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-full bg-slate-50/70">
-      {/* Top Location Bar */}
-      <div className="bg-white px-4 pt-3 pb-2 border-b border-slate-100 flex items-center justify-between sticky top-0 z-20">
-        <button
-          onClick={() => setIsLocationModalOpen(true)}
-          id="btn-location-header"
-          className="flex items-center gap-1.5 text-left group"
-        >
+      {/* Top Header Bar with Brand Logo, Location & Palette/Notification Controls */}
+      <div className="bg-white px-4 pt-3 pb-2.5 border-b border-slate-100 flex items-center justify-between sticky top-0 z-20 shadow-2xs">
+        {/* Brand Logo & Location */}
+        <div className="flex items-center gap-2.5">
+          {/* Brand Logo Badge */}
           <div
-            className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-50 text-blue-600 group-hover:bg-blue-100 transition-colors"
-            style={{ color: brandConfig.primaryColor, backgroundColor: `${brandConfig.primaryColor}15` }}
-          >
-            <MapPin className="h-4 w-4" />
-          </div>
-          <div>
-            <div className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-              Delivering services to
-            </div>
-            <div className="flex items-center gap-1 text-sm font-semibold text-slate-800">
-              <span className="truncate max-w-[190px]">{currentCity}</span>
-              <ChevronDown className="h-3.5 w-3.5 text-slate-500 group-hover:translate-y-0.5 transition-transform" />
-            </div>
-          </div>
-        </button>
-
-        <button
-          onClick={() => setIsNotificationOpen(true)}
-          id="btn-notifications-header"
-          className="relative flex items-center justify-center w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
-          aria-label="Notifications"
-        >
-          <Bell className="h-4.5 w-4.5" />
-          <span
-            className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full ring-2 ring-white"
+            className="flex items-center justify-center w-8 h-8 rounded-xl text-white font-black text-xs shadow-xs shrink-0"
             style={{ backgroundColor: brandConfig.primaryColor }}
-          />
-        </button>
+          >
+            {brandConfig.logoUrl ? (
+              <img src={brandConfig.logoUrl} alt={brandConfig.name} className="w-5 h-5 object-contain" />
+            ) : (
+              <Sparkles className="h-4.5 w-4.5 text-white" />
+            )}
+          </div>
+
+          <button
+            onClick={() => setIsLocationModalOpen(true)}
+            id="btn-location-header"
+            className="flex flex-col text-left group"
+          >
+            <div className="flex items-center gap-1">
+              <span className="font-extrabold text-sm text-slate-900 tracking-tight">{brandConfig.name}</span>
+            </div>
+            <div className="flex items-center gap-1 text-[11px] font-semibold text-slate-500">
+              <MapPin className="h-3 w-3 shrink-0" style={{ color: brandConfig.primaryColor }} />
+              <span className="truncate max-w-[130px] sm:max-w-[180px]">{currentCity}</span>
+              <ChevronDown className="h-3 w-3 text-slate-400 group-hover:translate-y-0.5 transition-transform" />
+            </div>
+          </button>
+        </div>
+
+        {/* Right Icon Actions: Palette (Customize Brand) + Bell (Notifications) */}
+        <div className="flex items-center gap-2">
+          {/* Color Palette Button */}
+          <button
+            onClick={() => setIsCustomizerOpen(true)}
+            id="btn-customize-brand-header"
+            className="relative flex items-center justify-center w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 active:scale-95 transition-all shadow-xs border border-slate-200/60"
+            aria-label="Customize Brand"
+            title="Customize Brand & Theme"
+          >
+            <Palette className="h-4.5 w-4.5" style={{ color: brandConfig.primaryColor }} />
+          </button>
+
+          {/* Notifications Button */}
+          <button
+            onClick={() => setIsNotificationOpen(true)}
+            id="btn-notifications-header"
+            className="relative flex items-center justify-center w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 active:scale-95 transition-all shadow-xs border border-slate-200/60"
+            aria-label="Notifications"
+            title="Notifications"
+          >
+            <Bell className="h-4.5 w-4.5" />
+            <span
+              className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full ring-2 ring-white"
+              style={{ backgroundColor: brandConfig.primaryColor }}
+            />
+          </button>
+        </div>
       </div>
 
       <div className="flex-1 px-4 py-4 space-y-6 pb-6">

@@ -56,60 +56,68 @@ export const NotificationCenterModal: React.FC = () => {
 
         {/* List */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
-          {notifications.map((n) => (
-            <div
-              key={n.id}
-              onClick={() => {
-                markNotificationAsRead(n.id);
-                if (n.type === 'booking') {
-                  setIsNotificationOpen(false);
-                  navigate('my_bookings');
-                } else if (n.type === 'promo') {
-                  setIsNotificationOpen(false);
-                  navigate('explore');
-                }
-              }}
-              className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-start gap-3 ${
-                !n.isRead
-                  ? 'bg-blue-50/40 border-blue-200'
-                  : 'bg-white border-slate-100 hover:bg-slate-50'
-              }`}
-            >
+          {(!notifications || notifications.length === 0) ? (
+            <div className="py-12 text-center text-slate-400 text-xs">
+              <Bell className="h-8 w-8 mx-auto mb-2 opacity-40 text-slate-400" />
+              <p className="font-semibold text-slate-600">No notifications yet</p>
+              <p className="text-[11px] text-slate-400 mt-1">We'll alert you here about your bookings & promos.</p>
+            </div>
+          ) : (
+            notifications.map((n) => (
               <div
-                className="flex items-center justify-center w-9 h-9 rounded-xl bg-white shadow-xs shrink-0"
-                style={{ color: brandConfig.primaryColor }}
+                key={n.id}
+                onClick={() => {
+                  if (markNotificationAsRead) markNotificationAsRead(n.id);
+                  if (n.type === 'booking') {
+                    setIsNotificationOpen(false);
+                    navigate('my_bookings');
+                  } else if (n.type === 'promo') {
+                    setIsNotificationOpen(false);
+                    navigate('explore');
+                  }
+                }}
+                className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-start gap-3 ${
+                  !n.isRead
+                    ? 'bg-blue-50/40 border-blue-200'
+                    : 'bg-white border-slate-100 hover:bg-slate-50'
+                }`}
               >
-                {n.type === 'booking' ? (
-                  <CheckCircle2 className="h-4.5 w-4.5 text-emerald-600" />
-                ) : n.type === 'promo' ? (
-                  <Tag className="h-4.5 w-4.5 text-blue-600" />
-                ) : (
-                  <Clock className="h-4.5 w-4.5 text-amber-600" />
+                <div
+                  className="flex items-center justify-center w-9 h-9 rounded-xl bg-white shadow-xs shrink-0"
+                  style={{ color: brandConfig.primaryColor }}
+                >
+                  {n.type === 'booking' ? (
+                    <CheckCircle2 className="h-4.5 w-4.5 text-emerald-600" />
+                  ) : n.type === 'promo' ? (
+                    <Tag className="h-4.5 w-4.5 text-blue-600" />
+                  ) : (
+                    <Clock className="h-4.5 w-4.5 text-amber-600" />
+                  )}
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-1">
+                    <h4 className="text-xs font-bold text-slate-900 truncate">
+                      {n.title}
+                    </h4>
+                    <span className="text-[10px] text-slate-400 shrink-0">
+                      {n.timeAgo}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
+                    {n.message}
+                  </p>
+                </div>
+
+                {!n.isRead && (
+                  <div
+                    className="w-2 h-2 rounded-full mt-1.5 shrink-0"
+                    style={{ backgroundColor: brandConfig.primaryColor }}
+                  />
                 )}
               </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between gap-1">
-                  <h4 className="text-xs font-bold text-slate-900 truncate">
-                    {n.title}
-                  </h4>
-                  <span className="text-[10px] text-slate-400 shrink-0">
-                    {n.timeAgo}
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
-                  {n.message}
-                </p>
-              </div>
-
-              {!n.isRead && (
-                <div
-                  className="w-2 h-2 rounded-full mt-1.5 shrink-0"
-                  style={{ backgroundColor: brandConfig.primaryColor }}
-                />
-              )}
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>

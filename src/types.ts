@@ -113,6 +113,15 @@ export interface Booking {
   notes?: string;
 }
 
+export interface AppNotification {
+  id: string;
+  type: 'booking' | 'promo' | 'system';
+  title: string;
+  message: string;
+  timeAgo: string;
+  isRead: boolean;
+}
+
 export interface UserProfile {
   id: string;
   name: string;

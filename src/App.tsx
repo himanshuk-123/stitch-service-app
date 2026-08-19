@@ -10,13 +10,15 @@ import { BookingSummaryScreen } from './components/screens/BookingSummaryScreen'
 import { BookingConfirmedScreen } from './components/screens/BookingConfirmedScreen';
 import { MyBookingsScreen } from './components/screens/MyBookingsScreen';
 import { ProfileScreen } from './components/screens/ProfileScreen';
+import { LoginScreen } from './components/screens/LoginScreen';
+import { SignupScreen } from './components/screens/SignupScreen';
 import { CustomizerDrawer } from './components/modals/CustomizerDrawer';
 import { LocationPickerModal } from './components/modals/LocationPickerModal';
 import { SearchModal } from './components/modals/SearchModal';
 import { NotificationCenterModal } from './components/modals/NotificationCenterModal';
 import { BookingDetailModal } from './components/modals/BookingDetailModal';
 import { EditProfileModal } from './components/modals/EditProfileModal';
-import { Sparkles, Sliders, Smartphone, Laptop } from 'lucide-react';
+import { Sparkles, Sliders, Smartphone, Laptop, Eye, EyeOff } from 'lucide-react';
 
 const ScreenRenderer: React.FC = () => {
   const { currentScreen } = useApp();
@@ -42,6 +44,10 @@ const ScreenRenderer: React.FC = () => {
       return <MyBookingsScreen />;
     case 'profile':
       return <ProfileScreen />;
+    case 'login':
+      return <LoginScreen />;
+    case 'signup':
+      return <SignupScreen />;
     default:
       return <HomeScreen />;
   }
@@ -62,63 +68,39 @@ const ToastContainer: React.FC = () => {
 };
 
 const MainApp: React.FC = () => {
-  const { brandConfig, setIsCustomizerOpen } = useApp();
   const [deviceFrame, setDeviceFrame] = React.useState<'mobile' | 'fluid'>('mobile');
 
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-0 sm:p-4 md:p-6 text-slate-800 antialiased selection:bg-blue-100">
-      {/* Top Floating White-Label Toolbar for buyers & testers */}
-      <header className="w-full max-w-md md:max-w-2xl lg:max-w-4xl flex items-center justify-between px-4 py-2 text-white text-xs mb-2 z-20">
-        <div className="flex items-center gap-2">
-          <div
-            className="w-2.5 h-2.5 rounded-full animate-pulse"
-            style={{ backgroundColor: brandConfig.primaryColor }}
-          />
-          <span className="font-bold tracking-tight text-white/90">
-            {brandConfig.name} <span className="font-normal text-white/60">Platform</span>
-          </span>
-          <span className="hidden sm:inline px-2 py-0.5 rounded-md bg-white/10 text-[10px] text-white/80 font-mono">
-            White-Label Ready
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {/* Frame toggles */}
-          <div className="hidden sm:flex items-center bg-white/10 rounded-lg p-0.5 border border-white/10">
-            <button
-              onClick={() => setDeviceFrame('mobile')}
-              className={`p-1.5 rounded-md transition-all ${
-                deviceFrame === 'mobile'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-white/70 hover:text-white'
-              }`}
-              title="Mobile Device Preview"
-            >
-              <Smartphone className="h-3.5 w-3.5" />
-            </button>
-            <button
-              onClick={() => setDeviceFrame('fluid')}
-              className={`p-1.5 rounded-md transition-all ${
-                deviceFrame === 'fluid'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-white/70 hover:text-white'
-              }`}
-              title="Expanded Responsive Preview"
-            >
-              <Laptop className="h-3.5 w-3.5" />
-            </button>
-          </div>
-
+    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-0 sm:p-4 md:p-6 text-slate-800 antialiased selection:bg-blue-100 relative">
+      {/* Top Device Frame Mode Toggle Bar */}
+      <div className="hidden sm:flex items-center gap-2 mb-3 z-20">
+        <div className="flex items-center bg-slate-800/90 rounded-xl p-1 border border-white/10 backdrop-blur-md shadow-lg">
           <button
-            onClick={() => setIsCustomizerOpen(true)}
-            id="btn-floating-customize-brand"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white text-slate-900 font-bold shadow-sm hover:bg-slate-100 active:scale-95 transition-all text-xs"
+            onClick={() => setDeviceFrame('mobile')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              deviceFrame === 'mobile'
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-white/70 hover:text-white'
+            }`}
+            title="Mobile Device Preview"
           >
-            <Sliders className="h-3.5 w-3.5 text-blue-600" style={{ color: brandConfig.primaryColor }} />
-            <span>Customize Brand</span>
+            <Smartphone className="h-3.5 w-3.5" />
+            <span>Mobile View</span>
+          </button>
+          <button
+            onClick={() => setDeviceFrame('fluid')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              deviceFrame === 'fluid'
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-white/70 hover:text-white'
+            }`}
+            title="Expanded Preview"
+          >
+            <Laptop className="h-3.5 w-3.5" />
+            <span>Desktop View</span>
           </button>
         </div>
-      </header>
+      </div>
 
       {/* Main Container / Device Mockup */}
       <main

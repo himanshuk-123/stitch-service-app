@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Search, Share2, Heart, SlidersHorizontal } from 'lucide-react';
+import { ArrowLeft, Search, Share2, Heart, SlidersHorizontal, Palette } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 interface AppHeaderProps {
@@ -9,6 +9,7 @@ interface AppHeaderProps {
   showShare?: boolean;
   showHeart?: boolean;
   showFilter?: boolean;
+  showCustomizer?: boolean;
   onBackClick?: () => void;
   onSearchClick?: () => void;
   onShareClick?: () => void;
@@ -25,6 +26,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   showShare = false,
   showHeart = false,
   showFilter = false,
+  showCustomizer = true,
   onBackClick,
   onSearchClick,
   onShareClick,
@@ -33,7 +35,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   isFavorited = false,
   transparent = false,
 }) => {
-  const { goBack, setIsSearchOpen, showToast } = useApp();
+  const { goBack, setIsSearchOpen, setIsCustomizerOpen, brandConfig, showToast } = useApp();
 
   const handleBack = () => {
     if (onBackClick) onBackClick();
@@ -89,6 +91,18 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       </div>
 
       <div className="flex items-center gap-2">
+        {showCustomizer && (
+          <button
+            onClick={() => setIsCustomizerOpen(true)}
+            id="btn-header-palette-customizer"
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100/80 hover:bg-slate-200 active:scale-95 transition-all text-slate-700"
+            aria-label="Customize Brand"
+            title="Customize Brand & Theme"
+          >
+            <Palette className="h-4.5 w-4.5" style={{ color: brandConfig.primaryColor }} />
+          </button>
+        )}
+
         {showShare && (
           <button
             onClick={handleShare}
